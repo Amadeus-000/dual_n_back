@@ -18,11 +18,6 @@ import { useSelector } from 'react-redux';
 
 const MenuAppBar = () => {
     // console.log("MenuAppBar");
-    const [databaseDate, setDatabaseDate] = useState("");
-    axios.get('https://woxram.com/django/simpleapi/checkdatabaseupdateinfo/'
-    ).then(function (response) {
-        setDatabaseDate(response.data);
-    })
     const [drawerOpened, setDrawerOpened] = useState(false);
     const isOver200=useSelector(state => state.scroll.over200);
     const scrollDirection=useSelector(state => state.scroll.direction);
