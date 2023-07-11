@@ -123,8 +123,7 @@ function DNB() {
         let frame=0;
         let count=0;
         const answers=[];
-        // const positions=GenRandomPositions(iteration+nback);
-        const positions=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+        const positions=GenRandomPositions(iteration+nback);
         const colors=GenRandomColors(iteration+nback);
 
         console.log(positions);
