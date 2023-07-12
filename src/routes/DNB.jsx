@@ -88,7 +88,7 @@ function DNB() {
             }
         }
 
-        const url="http://133.130.96.237/dnbapi/create/?result="+ result_str+"&gametype="+gametype+"&gameiteration="+String(gameiteration)+"&gamenback="+String(gamenback);
+        const url="https://us-central1-test1-7f2c4.cloudfunctions.net/addDNBResult?result="+ result_str+"&gametype="+gametype+"&gameiteration="+String(gameiteration)+"&gamenback="+String(gamenback);
         axios.get(url);
     };
 
