@@ -54,26 +54,31 @@ exports.addData = functions.https.onRequest(async (req, res) => {
 });
 
 exports.addDNBResult=functions.https.onRequest((req, res) => {
-  cors(req, res, async() => {
-    // データベースへの参照を取得
-    const db = admin.firestore();
+  try {
+    cors(req, res, async() => {
+      // データベースへの参照を取得
+      const db = admin.firestore();
 
-    // クエリパラメータから値を取得
-    const result = req.query.result;
-    const gametype=req.query.gametype;
-    const gameiteration=req.query.gameiteration;
-    const gamenback=req.query.gamenback;
+      // クエリパラメータから値を取得
+      const result = req.query.result;
+      const gametype=req.query.gametype;
+      const gameiteration=req.query.gameiteration;
+      const gamenback=req.query.gamenback;
 
-    // データを登録
-    const docRef = db.collection("DNBResult").doc();
-    await docRef.set({
-      id: docRef.id,
-      result: result,
-      gametype: gametype,
-      gameiteration: gameiteration,
-      gamenback: gamenback,
+      // データを登録
+      const docRef = db.collection("DNBResult").doc();
+      await docRef.set({
+        id: docRef.id,
+        result: result,
+        gametype: gametype,
+        gameiteration: gameiteration,
+        gamenback: gamenback,
+      });
+
+      res.send("Result added successfully");
     });
-
-    res.send("Result added successfully");
-  });
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    res.status(500).send(error);
+  }
 });
