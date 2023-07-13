@@ -81,6 +81,7 @@ exports.addDNBResult=functions.https.onRequest((req, res) => {
     const gametype=req.query.gametype;
     const gameiteration=req.query.gameiteration;
     const gamenback=req.query.gamenback;
+    const date=req.query.date;
 
     const correctRate=countZeroesAndOnes(result);
 
@@ -93,6 +94,7 @@ exports.addDNBResult=functions.https.onRequest((req, res) => {
       gameiteration: gameiteration,
       gamenback: gamenback,
       correctRate: correctRate,
+      date: date,
     });
 
     res.send("Result added successfully");

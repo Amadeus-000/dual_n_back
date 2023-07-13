@@ -87,8 +87,10 @@ function DNB() {
                 result_str+="0";
             }
         }
+        let today = new Date();
+        let dateString = new Date(today.getTime() - (today.getTimezoneOffset() * 60000 )).toISOString().slice(0,10);
 
-        const url="https://us-central1-test1-7f2c4.cloudfunctions.net/addDNBResult?result="+ result_str+"&gametype="+gametype+"&gameiteration="+String(gameiteration)+"&gamenback="+String(gamenback);
+        const url="https://us-central1-test1-7f2c4.cloudfunctions.net/addDNBResult?result="+ result_str+"&gametype="+gametype+"&gameiteration="+String(gameiteration)+"&gamenback="+String(gamenback)+"&date="+dateString;
         axios.get(url);
     };
 
