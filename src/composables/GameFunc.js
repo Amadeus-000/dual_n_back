@@ -14,14 +14,14 @@ export const GameFunction = () => {
       while(num==previous_num){
         num=Math.floor(Math.random()*range);
       }
-      return num+1;
+      return num;
     }
   };
   const GenRandomPositions=(iter)=>{
     const positions=[];
     let previous_num=-1;
     for(let i=0;i<iter;i++){
-      positions.push(getRandomNumber(previous_num));
+      positions.push(getRandomNumber(previous_num)+1);
       previous_num=positions[i];
     }
     return positions;
