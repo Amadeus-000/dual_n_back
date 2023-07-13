@@ -22,7 +22,7 @@ export const GameFunction = () => {
     let previous_num=-1;
     for(let i=0;i<iter;i++){
       positions.push(getRandomNumber(previous_num)+1);
-      previous_num=positions[i];
+      previous_num=positions[i]-1;
     }
     return positions;
   };
