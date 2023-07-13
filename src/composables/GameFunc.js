@@ -1,7 +1,7 @@
 
 
 export const GameFunction = () => {
-  const getRandomNumber=(previous_num=-1,range=9,probability=45)=>{
+  const getRandomNumber=(previous_num=-1,range=9,probability=50)=>{
     // probabilityとは前回と同じ値がでる確率です。
     if(previous_num==-1){
       return Math.floor(Math.random()*range); 

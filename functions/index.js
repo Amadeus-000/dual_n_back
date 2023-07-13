@@ -60,6 +60,18 @@ exports.addData = functions.https.onRequest(async (req, res) => {
 });
 
 exports.addDNBResult=functions.https.onRequest((req, res) => {
+  const countZeroesAndOnes=(str)=>{
+    let zeroCount = 0;
+    let oneCount = 0;
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === "0") {
+        zeroCount++;
+      } else if (str[i] === "1") {
+        oneCount++;
+      }
+    }
+    return (oneCount/(zeroCount+oneCount));
+  };
   corsMiddleware(req, res, async () => {
     // データベースへの参照を取得
     const db = admin.firestore();
@@ -70,6 +82,8 @@ exports.addDNBResult=functions.https.onRequest((req, res) => {
     const gameiteration=req.query.gameiteration;
     const gamenback=req.query.gamenback;
 
+    const correctRate=countZeroesAndOnes(result);
+
     // データを登録
     const docRef = db.collection("DNBResult").doc();
     await docRef.set({
@@ -78,6 +92,7 @@ exports.addDNBResult=functions.https.onRequest((req, res) => {
       gametype: gametype,
       gameiteration: gameiteration,
       gamenback: gamenback,
+      correctRate: correctRate,
     });
 
     res.send("Result added successfully");
