@@ -19,7 +19,17 @@
 // });
 
 const functions = require("firebase-functions");
-const cors = require("cors")({origin: true});
+// const cors = require("cors")({origin: true});
+// const cors = require("cors")({origin: "https://dual-n-back-ashen.vercel.app/"});
+const admin = require("firebase-admin");
+admin.initializeApp();
+
+const cors = require("cors");
+const corsOptions = {
+  origin: ["https://dual-n-back-ashen.vercel.app", "http://localhost:3000", "https://us-central1-test1-7f2c4.cloudfunctions.net"],
+  optionsSuccessStatus: 200,
+};
+const corsMiddleware = cors(corsOptions);
 
 exports.helloWorld = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
@@ -27,12 +37,8 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
   });
 });
 
-
-const admin = require("firebase-admin");
-admin.initializeApp();
-
 exports.addData = functions.https.onRequest(async (req, res) => {
-  cors(req, res, async() => {
+  cors(req, res, async () => {
     // データベースへの参照を取得
     const db = admin.firestore();
 
@@ -54,31 +60,26 @@ exports.addData = functions.https.onRequest(async (req, res) => {
 });
 
 exports.addDNBResult=functions.https.onRequest((req, res) => {
-  try {
-    cors(req, res, async() => {
-      // データベースへの参照を取得
-      const db = admin.firestore();
+  corsMiddleware(req, res, async () => {
+    // データベースへの参照を取得
+    const db = admin.firestore();
 
-      // クエリパラメータから値を取得
-      const result = req.query.result;
-      const gametype=req.query.gametype;
-      const gameiteration=req.query.gameiteration;
-      const gamenback=req.query.gamenback;
+    // クエリパラメータから値を取得
+    const result = req.query.result;
+    const gametype=req.query.gametype;
+    const gameiteration=req.query.gameiteration;
+    const gamenback=req.query.gamenback;
 
-      // データを登録
-      const docRef = db.collection("DNBResult").doc();
-      await docRef.set({
-        id: docRef.id,
-        result: result,
-        gametype: gametype,
-        gameiteration: gameiteration,
-        gamenback: gamenback,
-      });
-
-      res.send("Result added successfully");
+    // データを登録
+    const docRef = db.collection("DNBResult").doc();
+    await docRef.set({
+      id: docRef.id,
+      result: result,
+      gametype: gametype,
+      gameiteration: gameiteration,
+      gamenback: gamenback,
     });
-  } catch (error) {
-    console.error("Error adding document: ", error);
-    res.status(500).send(error);
-  }
+
+    res.send("Result added successfully");
+  });
 });

@@ -14,7 +14,7 @@ export const GameFunction = () => {
       while(num==previous_num){
         num=Math.floor(Math.random()*range);
       }
-      return num
+      return num+1;
     }
   };
   const GenRandomPositions=(iter)=>{
