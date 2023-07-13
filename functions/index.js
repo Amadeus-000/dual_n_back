@@ -32,44 +32,48 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 
 exports.addData = functions.https.onRequest(async (req, res) => {
-  // データベースへの参照を取得
-  const db = admin.firestore();
+  cors(req, res, async() => {
+    // データベースへの参照を取得
+    const db = admin.firestore();
 
-  // クエリパラメータから値を取得
-  const itemName = req.query.item_name;
-  const description = req.query.description;
+    // クエリパラメータから値を取得
+    const itemName = req.query.item_name;
+    const description = req.query.description;
 
-  // データを登録
-  const docRef = db.collection("items").doc();
+    // データを登録
+    const docRef = db.collection("items").doc();
 
-  await docRef.set({
-    id: docRef.id,
-    item_name: itemName,
-    description: description,
+    await docRef.set({
+      id: docRef.id,
+      item_name: itemName,
+      description: description,
+    });
+
+    res.send("Data added successfully");
   });
-
-  res.send("Data added successfully");
 });
 
-exports.addDNBResult=functions.https.onRequest(async (req, res) => {
-  // データベースへの参照を取得
-  const db = admin.firestore();
+exports.addDNBResult=functions.https.onRequest((req, res) => {
+  cors(req, res, async() => {
+    // データベースへの参照を取得
+    const db = admin.firestore();
 
-  // クエリパラメータから値を取得
-  const result = req.query.result;
-  const gametype=req.query.gametype;
-  const gameiteration=req.query.gameiteration;
-  const gamenback=req.query.gamenback;
+    // クエリパラメータから値を取得
+    const result = req.query.result;
+    const gametype=req.query.gametype;
+    const gameiteration=req.query.gameiteration;
+    const gamenback=req.query.gamenback;
 
-  // データを登録
-  const docRef = db.collection("DNBResult").doc();
-  await docRef.set({
-    id: docRef.id,
-    result: result,
-    gametype: gametype,
-    gameiteration: gameiteration,
-    gamenback: gamenback,
+    // データを登録
+    const docRef = db.collection("DNBResult").doc();
+    await docRef.set({
+      id: docRef.id,
+      result: result,
+      gametype: gametype,
+      gameiteration: gameiteration,
+      gamenback: gamenback,
+    });
+
+    res.send("Result added successfully");
   });
-
-  res.send("Result added successfully");
 });
